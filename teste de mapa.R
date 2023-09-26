@@ -2,10 +2,16 @@ library(tidyverse)
 library(leaflet)
 library(htmlwidgets)
 
-juntos <- atrasos
+juntos <- juntos_1_
+juntos$media_correta <-   round(juntos$media_correta,digits = 2)
 
 juntos = juntos %>%
   mutate(cor = ifelse(media_correta < 10, "green", "red" ))
+
+
+
+ legenda<- paste(sep=" ","Aeroporto:",juntos$AIRPORT,
+      "<br>Media de atraso:",juntos$media_correta) %>% lapply(htmltools::HTML)
 
 
 juntos %>%
@@ -13,7 +19,10 @@ juntos %>%
   addTiles() %>%
   addCircleMarkers(~LONGITUDE, ~LATITUDE,
                    color = ~cor,
-                   clusterOptions = markerClusterOptions()) -> mapa
+                  label = ~legenda,
+                   clusterOptions = markerClusterOptions() ) -> mapa
 
 saveWidget(file = "EUA.html", widget = mapa)
+
+mapa
 
