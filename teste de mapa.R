@@ -11,7 +11,7 @@ juntos = juntos %>%
 
 
  legenda<- paste(sep=" ","Aeroporto:",juntos$AIRPORT,
-      "<br>Media de atraso:",juntos$media_correta) %>% lapply(htmltools::HTML)
+      "<br>Media de atraso em minutos:",juntos$media_correta) %>% lapply(htmltools::HTML)
 
 
 juntos %>%
